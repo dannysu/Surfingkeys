@@ -97,9 +97,12 @@ command('listSession', 'list session', function() {
         key: 'sessions'
     }, function(response) {
         Omnibar.listResults(Object.keys(response.settings.sessions), function(s) {
-            return createElementWithContent('li', s);
+            var li = createElementWithContent('li', s);
+            li.cmd = 'openSession ' + s;
+            return li;
         });
     });
+    return true; // to keep open after the command executed.
 });
 command('createSession', 'createSession [name]', function(args) {
     RUNTIME('createSession', {
@@ -115,7 +118,6 @@ command('deleteSession', 'deleteSession [name]', function(args) {
     RUNTIME('deleteSession', {
         name: args[0]
     });
-    return true; // to close omnibar after the command executed.
 });
 command('openSession', 'openSession [name]', function(args) {
     RUNTIME('openSession', {
@@ -128,10 +130,12 @@ command('listQueueURLs', 'list URLs in queue waiting for open', function(args) {
             return createElementWithContent('li', s);
         });
     });
+    return true; // to keep open after the command executed.
 });
 command('timeStamp', 'print time stamp in human readable format', function(args) {
     var dt = new Date(parseInt(args[0]));
     Omnibar.listWords([dt.toString()]);
+    return true; // to keep open after the command executed.
 });
 command('userAgent', 'set user agent', function(args) {
     // 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'

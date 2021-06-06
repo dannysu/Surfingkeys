@@ -1280,7 +1280,7 @@ Omnibar.addHandler('SearchEngine', SearchEngine);
 
 const Commands = (function() {
     var self = {
-        focusFirstCandidate: true,
+        focusFirstCandidate: false,
         prompt: ':',
         items: {}
     };
@@ -1295,20 +1295,32 @@ const Commands = (function() {
      *
      * @return {undefined}
      */
-    self.onOpen = function() {
+    self.onOpen = function(options) {
         historyInc = -1;
-        RUNTIME('getSettings', {
-            key: 'cmdHistory'
-        }, function(response) {
-            var candidates = response.settings.cmdHistory;
-            if (candidates.length) {
-                Omnibar.listResults(candidates, function(c) {
-                    var li = createElementWithContent('li', c);
-                    li.cmd = c;
+        if (options && options.onOpen && options.onOpen.listSession) {
+            RUNTIME('getSettings', {
+                key: 'sessions'
+            }, function(response) {
+                Omnibar.listResults(Object.keys(response.settings.sessions), function(s) {
+                    var li = createElementWithContent('li', s);
+                    li.cmd = options.onOpen.cmdPrefix ? (options.onOpen.cmdPrefix + s) : '';
                     return li;
                 });
-            }
-        });
+            });
+        } else {
+            RUNTIME('getSettings', {
+                key: 'cmdHistory'
+            }, function(response) {
+                var candidates = response.settings.cmdHistory;
+                if (candidates.length) {
+                    Omnibar.listResults(candidates, function(c) {
+                        var li = createElementWithContent('li', c);
+                        li.cmd = c;
+                        return li;
+                    });
+                }
+            });
+        }
     };
 
     self.onReset = self.onOpen;
@@ -1334,7 +1346,7 @@ const Commands = (function() {
     /**
      * Execute command after pressing the return key.
      *
-     * Displays any output if the command.
+     * Displays any output of the command.
      *
      * @memberof Omnibar
      * @instance
@@ -1346,8 +1358,11 @@ const Commands = (function() {
         var cmdline = Omnibar.input.value;
         if (cmdline.length) {
             runtime.updateHistory('cmd', cmdline);
-            self.execute(cmdline);
+            var keepOpen = self.execute(cmdline);
             Omnibar.input.value = "";
+            if (!keepOpen) {
+                Front.hidePopup();
+            }
         }
         return ret;
     };
@@ -1378,7 +1393,7 @@ const Commands = (function() {
         var cmd = args.shift();
         if (self.items.hasOwnProperty(cmd)) {
             var meta = self.items[cmd];
-            meta.code.call(meta.code, args);
+            return meta.code.call(meta.code, args);
         } else {
             Front.contentCommand({
                 action: 'executeScript',

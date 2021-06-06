@@ -154,14 +154,63 @@ mapkey('ZR', '#5Restore last session', function() {
     });
 });
 */
-mapkey('sl', '#5List sessions', function() {
-    Front.openOmnibar({ type: "Commands" });
-    RUNTIME('getSettings', {
-        key: 'sessions'
-    }, function(response) {
-        Omnibar.listResults(Object.keys(response.settings.sessions), function(s) {
-            return createElementWithContent('li', s);
-        });
+mapkey('Sl', '#5List sessions', function() {
+    Front.openOmnibar({
+        type: "Commands",
+        extra: {
+            onOpen: {
+                listSession: true,
+                cmdPrefix: 'openSession '
+            }
+        }
+    });
+});
+mapkey('Sc', '#5Create session', function() {
+    Front.openOmnibar({
+        type: "Commands",
+        pref: "createSession ",
+        extra: {
+            onOpen: {
+                listSession: true,
+                cmdPrefix: 'createSession '
+            }
+        }
+    });
+});
+mapkey('Sd', '#5Delete session', function() {
+    Front.openOmnibar({
+        type: "Commands",
+        pref: "deleteSession ",
+        extra: {
+            onOpen: {
+                listSession: true,
+                cmdPrefix: 'deleteSession '
+            }
+        }
+    });
+});
+mapkey('So', '#5Open session', function() {
+    Front.openOmnibar({
+        type: "Commands",
+        pref: "openSession ",
+        extra: {
+            onOpen: {
+                listSession: true,
+                cmdPrefix: 'openSession '
+            }
+        }
+    });
+});
+mapkey('Sa', '#5Add to session', function() {
+    Front.openOmnibar({
+        type: "Commands",
+        pref: "addToSession ",
+        extra: {
+            onOpen: {
+                listSession: true,
+                cmdPrefix: 'addToSession '
+            }
+        }
     });
 });
 mapkey('T', '#3Choose a tab', function() {

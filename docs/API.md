@@ -74,13 +74,17 @@ Returns **[undefined][7]**
 
 List commands when OmniBar opens
 
+#### Parameters
+
+*   `options`  
+
 Returns **[undefined][7]** 
 
 ### onEnter
 
 Execute command after pressing the return key.
 
-Displays any output if the command.
+Displays any output of the command.
 
 Returns **[boolean][6]** 
 
