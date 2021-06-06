@@ -257,16 +257,18 @@ mapkey('F', '#4Go one tab history forward', function() {
 mapkey('<Ctrl-6>', '#4Go to last used tab', function() {
     RUNTIME("goToLastTab");
 });
+/*
 mapkey('gT', '#4Go to first activated tab', function() {
     RUNTIME("historyTab", {index: 0});
 }, {repeatIgnore: true});
 mapkey('gt', '#4Go to last activated tab', function() {
     RUNTIME("historyTab", {index: -1});
 }, {repeatIgnore: true});
-mapkey('S', '#4Go back in history', function() {
+*/
+mapkey('H', '#4Go back in history', function() {
     history.go(-1);
 }, {repeatIgnore: true});
-mapkey('D', '#4Go forward in history', function() {
+mapkey('L', '#4Go forward in history', function() {
     history.go(1);
 }, {repeatIgnore: true});
 mapkey('r', '#4Reload the page', function() {
@@ -648,6 +650,7 @@ mapkey(';pp', '#7Paste html on current page', function() {
     });
 });
 
+/*
 function openGoogleTranslate() {
     if (window.getSelection().toString()) {
         searchSelectedWith('https://translate.google.com/?hl=en#auto/en/', false, false, '');
@@ -655,8 +658,9 @@ function openGoogleTranslate() {
         tabOpenLink("https://translate.google.com/translate?js=n&sl=auto&tl=zh-CN&u=" + window.location.href);
     }
 }
-mapkey(';t', 'Translate selected text with google', openGoogleTranslate);
-vmapkey('t', '#9Translate selected text with google', openGoogleTranslate);
+*/
+//mapkey(';t', 'Translate selected text with google', openGoogleTranslate);
+//vmapkey('t', '#9Translate selected text with google', openGoogleTranslate);
 mapkey(';dh', '#14Delete history older than 30 days', function() {
     RUNTIME('deleteHistoryOlderThan', {
         days: 30
@@ -676,13 +680,16 @@ addSearchAliasX('d', 'duckduckgo', 'https://duckduckgo.com/?q=', 's', 'https://d
         return r.phrase;
     });
 });
+/*
 addSearchAliasX('b', 'baidu', 'https://www.baidu.com/s?wd=', 's', 'http://suggestion.baidu.com/su?cb=&wd=', function(response) {
     var res = response.text.match(/,s:\[("[^\]]+")]}/);
     return res ? res[1].replace(/"/g, '').split(",") : [];
 });
-addSearchAliasX('e', 'wikipedia', 'https://en.wikipedia.org/wiki/', 's', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&namespace=0&limit=40&search=', function(response) {
+*/
+addSearchAliasX('w', 'wikipedia', 'https://en.wikipedia.org/wiki/', 's', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&namespace=0&limit=40&search=', function(response) {
     return JSON.parse(response.text)[1];
 });
+/*
 addSearchAliasX('w', 'bing', 'http://global.bing.com/search?setmkt=en-us&setlang=en-us&q=', 's', 'http://api.bing.com/osjson.aspx?query=', function(response) {
     var res = JSON.parse(response.text);
     return res[1];
@@ -704,5 +711,6 @@ addSearchAliasX('y', 'youtube', 'https://www.youtube.com/results?search_query=',
         return d[0];
     });
 });
+*/
 
 }

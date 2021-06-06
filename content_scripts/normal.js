@@ -1124,7 +1124,7 @@ function createNormal() {
         }
     });
 
-    self.mappings.add("E", {
+    self.mappings.add("gT", {
         annotation: "Go one tab left",
         feature_group: 3,
         repeatIgnore: true,
@@ -1132,7 +1132,7 @@ function createNormal() {
             RUNTIME("previousTab");
         }
     });
-    self.mappings.add("R", {
+    self.mappings.add("gt", {
         annotation: "Go one tab right",
         feature_group: 3,
         repeatIgnore: true,
