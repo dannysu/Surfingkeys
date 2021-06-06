@@ -43,10 +43,15 @@ for (const site of pinnedSites) {
 `;
 }
 
-browser.topSites.get({ includeFavicon: true, limit: 4 }).then(sites => {
+browser.topSites.get({ includeFavicon: true, limit: 3 }).then(sites => {
+  var i = 0;
   for (const site of sites) {
+    var liClass = '';
+    if (i === 2) {
+      liClass = 'hide-for-narrow';
+    }
     html += `
-                                <li class="top-site-outer hide-for-narrow">
+                                <li class="top-site-outer ${liClass}">
                                   <div class="top-site-inner">
                                     <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
                                       <div class="tile">
@@ -60,7 +65,8 @@ browser.topSites.get({ includeFavicon: true, limit: 4 }).then(sites => {
                                     </a>
                                   </div>
                                 </li>
-  `;
+`;
+    i++;
   }
   listEl.innerHTML = html;
 });
