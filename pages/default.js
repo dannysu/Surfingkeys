@@ -106,7 +106,7 @@ mapkey('g0', '#3Go to the 1st tab', function() {
         }
     });
 });
-mapkey('g$', '#3Go to the last tab', function() {
+mapkey('g_', '#3Go to the last tab', function() {
     RUNTIME('getTabs', {filterSenderTab: false}, function (response) {
         RUNTIME.repeats = response.tabs.length;
         RUNTIME('focusTabByIndex', {
@@ -116,6 +116,7 @@ mapkey('g$', '#3Go to the last tab', function() {
         });
     });
 });
+map('g$', 'g_', 0, "#3Go to the last tab");
 /*
 mapkey('zr', '#3zoom reset', function() {
     RUNTIME('setZoom', {
