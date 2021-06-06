@@ -2,12 +2,15 @@
     "manifest_version": 2,
     "name": "Surfingkeys",
     "short_name": "Rich shortcuts in vim spirit for productivity with keyboard.",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Rich shortcuts to click links/switch tabs/scroll pages or capture full page, use your browser like vim for productivity.",
     "icons": {
         "16": "icons/16.png",
         "48": "icons/48.png",
         "128": "icons/128.png"
+    },
+    "chrome_url_overrides": {
+        "newtab": "pages/newtab_redirect.html"
     },
     "commands": {
         "restartext": {
@@ -46,7 +49,8 @@
         "downloads",
         "topSites",
         "clipboardRead",
-        "clipboardWrite"
+        "clipboardWrite",
+        "cookies"
     ],
     "background": {
         "scripts": [
@@ -81,5 +85,5 @@
         "pages/shadow.css",
         "pages/default.css"
     ],
-    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+    "content_security_policy": "script-src 'self' chrome: resource: https://www.google-analytics.com; object-src 'self'"
 }
