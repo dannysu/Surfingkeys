@@ -1198,8 +1198,13 @@ const ChromeService = (function() {
     };
     self.createSession = function(message, sender, sendResponse) {
         loadSettings('sessions', function(data) {
-            chrome.tabs.query({}, function(tabs) {
-                var tabGroup = {};
+            chrome.tabs.query({currentWindow: true, hidden: false}, function(tabs) {
+                // Save all tabs of the current window
+                var urls = [];
+                tabs.forEach(function(tab) {
+                    urls.push(tab.url);
+                });
+                /*
                 tabs.forEach(function(tab) {
                     if (tab && tab.index !== void 0) {
                         if (!tabGroup.hasOwnProperty(tab.windowId)) {
@@ -1216,11 +1221,35 @@ const ChromeService = (function() {
                         tabg.push(tabGroup[k]);
                     }
                 }
+                */
                 data.sessions[message.name] = {};
-                data.sessions[message.name]['tabs'] = tabg;
+                data.sessions[message.name]['tabs'] = urls;
                 _updateAndPostSettings({
                     sessions: data.sessions
-                }, (message.quitAfterSaved ? _quit : undefined));
+                });
+            });
+        });
+    };
+    self.addToSession = function(message, sender, sendResponse) {
+        loadSettings('sessions', function(data) {
+            if (data.sessions.hasOwnProperty(message.name)) {
+                chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+                    tabs.forEach(function(tab) {
+                        data.sessions[message.name]['tabs'].push(tab.url);
+                    });
+                });
+            } else {
+                var urls = [];
+                chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+                    tabs.forEach(function(tab) {
+                        urls.push(tab.url);
+                    });
+                });
+                data.sessions[message.name] = {};
+                data.sessions[message.name]['tabs'] = urls;
+            }
+            _updateAndPostSettings({
+                sessions: data.sessions
             });
         });
     };
@@ -1228,6 +1257,14 @@ const ChromeService = (function() {
         loadSettings('sessions', function(data) {
             if (data.sessions.hasOwnProperty(message.name)) {
                 var urls = data.sessions[message.name]['tabs'];
+                urls.forEach(function(url) {
+                    chrome.tabs.create({
+                        url: url,
+                        active: false,
+                        pinned: false
+                    });
+                });
+                /*
                 urls[0].forEach(function(url) {
                     chrome.tabs.create({
                         url: url,
@@ -1248,6 +1285,7 @@ const ChromeService = (function() {
                         });
                     });
                 }
+                */
                 chrome.tabs.query({
                     url: newTabUrl
                 }, function(tabs) {

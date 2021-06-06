@@ -106,6 +106,11 @@ command('createSession', 'createSession [name]', function(args) {
         name: args[0]
     });
 });
+command('addToSession', 'addToSession [name]', function(args) {
+    RUNTIME('addToSession', {
+        name: args[0]
+    });
+});
 command('deleteSession', 'deleteSession [name]', function(args) {
     RUNTIME('deleteSession', {
         name: args[0]

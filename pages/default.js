@@ -92,13 +92,14 @@ mapkey('zo', '#3zoom out', function() {
     });
 });
 
-map('ZQ', ':quit');
+//map('ZQ', ':quit');
 mapkey(".", '#0Repeat last action', Normal.repeatLast, {repeatIgnore: true});
 mapkey(";ql", '#0Show last action', function() {
     Front.showPopup(htmlEncode(runtime.conf.lastKeys.map(function(k) {
         return KeyboardUtils.decodeKeystroke(k);
     }).join(' → ')));
 }, {repeatIgnore: true});
+/*
 mapkey('ZZ', '#5Save session and quit', function() {
     RUNTIME('createSession', {
         name: 'LAST',
@@ -110,6 +111,7 @@ mapkey('ZR', '#5Restore last session', function() {
         name: 'LAST'
     });
 });
+*/
 mapkey('T', '#3Choose a tab', function() {
     Front.chooseTab();
 });
