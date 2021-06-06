@@ -290,7 +290,7 @@ mapkey('oi', '#8Open incognito window', function() {
 mapkey('ox', '#8Open recently closed URL', function() {
     Front.openOmnibar({type: "URLs", extra: "getRecentlyClosed"});
 });
-mapkey('H', '#8Open opened URL in current tab', function() {
+mapkey('oh', '#8Open opened URL in current tab', function() {
     Front.openOmnibar({type: "URLs", extra: "getTabURLs"});
 });
 mapkey('Q', '#8Open omnibar for word translation', function() {
@@ -306,9 +306,11 @@ mapkey('ab', '#8Bookmark current page to selected folder', function() {
     };
     Front.openOmnibar(({type: "AddBookmark", extra: page}));
 });
+/*
 mapkey('oh', '#8Open URL from history', function() {
     Front.openOmnibar({type: "History"});
 });
+*/
 mapkey('om', '#8Open URL from vim-like marks', function() {
     Front.openOmnibar({type: "VIMarks"});
 });
