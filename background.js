@@ -694,6 +694,10 @@ const ChromeService = (function() {
     self.getTabs = function(message, sender, sendResponse) {
         var tab = sender.tab;
         var queryInfo = message.queryInfo || {};
+        var filterSenderTab = true;
+        if (message.filterSenderTab === false) {
+            filterSenderTab = false;
+        }
         chrome.tabs.query(queryInfo, function(tabs) {
             tabs = _filterByTitleOrUrl(tabs, message.query);
             if (message.query && message.query.length) {
@@ -701,9 +705,11 @@ const ChromeService = (function() {
                     return b.title.indexOf(message.query) !== -1 || (b.url && b.url.indexOf(message.query) !== -1);
                 });
             }
-            tabs = tabs.filter(function(b) {
-                return b.id !== tab.id;
-            });
+            if (filterSenderTab) {
+                tabs = tabs.filter(function(b) {
+                    return b.id !== tab.id;
+                });
+            }
             if (conf.tabsMRUOrder) {
                 tabs.sort(function(x, y) {
                     // Shift tabs without "last access" data to the end
@@ -1233,17 +1239,13 @@ const ChromeService = (function() {
     self.addToSession = function(message, sender, sendResponse) {
         loadSettings('sessions', function(data) {
             if (data.sessions.hasOwnProperty(message.name)) {
-                chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-                    tabs.forEach(function(tab) {
-                        data.sessions[message.name]['tabs'].push(tab.url);
-                    });
+                getActiveTab(function(tab) {
+                    data.sessions[message.name]['tabs'].push(tab.url);
                 });
             } else {
                 var urls = [];
-                chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-                    tabs.forEach(function(tab) {
-                        urls.push(tab.url);
-                    });
+                getActiveTab(function(tab) {
+                    urls.push(tab.url);
                 });
                 data.sessions[message.name] = {};
                 data.sessions[message.name]['tabs'] = urls;
