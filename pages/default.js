@@ -515,9 +515,11 @@ mapkey('yp', '#7Copy form data for POST on current page', function() {
     });
     Clipboard.write(JSON.stringify(aa, null, 4));
 });
+/*
 mapkey('ob', '#8Open Search with alias b', function() {
     Front.openOmnibar({type: "SearchEngine", extra: "b"});
 });
+*/
 mapkey('og', '#8Open Search with alias g', function() {
     Front.openOmnibar({type: "SearchEngine", extra: "g"});
 });
@@ -527,9 +529,11 @@ mapkey('od', '#8Open Search with alias d', function() {
 mapkey('ow', '#8Open Search with alias w', function() {
     Front.openOmnibar({type: "SearchEngine", extra: "w"});
 });
+/*
 mapkey('oy', '#8Open Search with alias y', function() {
     Front.openOmnibar({type: "SearchEngine", extra: "y"});
 });
+*/
 if (window.navigator.userAgent.indexOf("Firefox") > 0) {
     mapkey('on', '#3Open newtab', function() {
         tabOpenLink("about:blank");
