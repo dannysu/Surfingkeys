@@ -2,12 +2,12 @@ var listEl = document.querySelector('ul.top-sites-list');
 
 var pinnedSites = [
   {
-    url: 'https://news.ycombinator.com',
+    url: 'https://news.ycombinator.com/',
     text: 'news.ycombinator.com',
     image: 'https://news.ycombinator.com/favicon.ico'
   },
   {
-    url: 'https://slickdeals.net',
+    url: 'https://slickdeals.net/',
     text: 'slickdeals.net',
     image: 'https://slickdeals.net/images/slickdeals_icon.svg'
   },
@@ -41,8 +41,17 @@ for (const site of pinnedSites) {
 </li>`;
 }
 
-browser.topSites.get({ includeFavicon: true, limit: 4 }).then(sites => {
+browser.topSites.get({ includeFavicon: true, newtab: true }).then(sites => {
   var i = 0;
+  sites = sites.filter(x => {
+    for (const site of pinnedSites) {
+      if (x.url === site.url) {
+        return false;
+      }
+    }
+    return true;
+  });
+  sites = sites.slice(0, 8 - pinnedSites.length);
   for (const site of sites) {
     var liClass = '';
     if (i >= 2) {
