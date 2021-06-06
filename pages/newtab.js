@@ -25,47 +25,43 @@ var pinnedSites = [
 
 var html = '';
 for (const site of pinnedSites) {
-  html += `
-                              <li class="top-site-outer">
-                                <div class="top-site-inner">
-                                  <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
-                                    <div class="tile">
-                                      <div class="icon-wrapper" data-fallback="n">
-                                        <div class="top-site-icon rich-icon" style="background-image: url(${site.image});"></div>
-                                      </div>
-                                    </div>
-                                    <div class="title has-icon pinned">
-                                      <span dir="auto"><div class="icon icon-pin-small"></div>${site.text}</span>
-                                    </div>
-                                  </a>
-                                </div>
-                              </li>
-`;
+  html += `<li class="top-site-outer">
+  <div class="top-site-inner">
+    <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
+      <div class="tile">
+        <div class="icon-wrapper" data-fallback="n">
+          <div class="top-site-icon rich-icon" style="background-image: url(${site.image});"></div>
+        </div>
+      </div>
+      <div class="title has-icon pinned">
+        <span dir="auto"><div class="icon icon-pin-small"></div>${site.text}</span>
+      </div>
+    </a>
+  </div>
+</li>`;
 }
 
-browser.topSites.get({ includeFavicon: true, limit: 3 }).then(sites => {
+browser.topSites.get({ includeFavicon: true, limit: 4 }).then(sites => {
   var i = 0;
   for (const site of sites) {
     var liClass = '';
-    if (i === 2) {
+    if (i >= 2) {
       liClass = 'hide-for-narrow';
     }
-    html += `
-                                <li class="top-site-outer ${liClass}">
-                                  <div class="top-site-inner">
-                                    <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
-                                      <div class="tile">
-                                        <div class="icon-wrapper" data-fallback="n">
-                                          <div class="top-site-icon rich-icon" style="background-image: url(${site.favicon});"></div>
-                                        </div>
-                                      </div>
-                                      <div class="title">
-                                        <span dir="auto">${site.title}</span>
-                                      </div>
-                                    </a>
-                                  </div>
-                                </li>
-`;
+    html += `<li class="top-site-outer ${liClass}">
+  <div class="top-site-inner">
+    <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
+      <div class="tile">
+        <div class="icon-wrapper" data-fallback="n">
+          <div class="top-site-icon rich-icon" style="background-image: url(${site.favicon});"></div>
+        </div>
+      </div>
+      <div class="title">
+        <span dir="auto">${site.title}</span>
+      </div>
+    </a>
+  </div>
+</li>`;
     i++;
   }
   listEl.innerHTML = html;
