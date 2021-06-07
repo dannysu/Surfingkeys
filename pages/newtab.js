@@ -27,7 +27,7 @@ var html = '';
 for (const site of pinnedSites) {
   html += `<li class="top-site-outer">
   <div class="top-site-inner">
-    <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
+    <a class="top-site-button" href="${site.url}" draggable="true">
       <div class="tile">
         <div class="icon-wrapper" data-fallback="n">
           <div class="top-site-icon rich-icon" style="background-image: url(${site.image});"></div>
@@ -59,7 +59,7 @@ browser.topSites.get({ includeFavicon: true, newtab: true }).then(sites => {
     }
     html += `<li class="top-site-outer ${liClass}">
   <div class="top-site-inner">
-    <a class="top-site-button" href="${site.url}" tabindex="0" draggable="true">
+    <a class="top-site-button" href="${site.url}" draggable="true">
       <div class="tile">
         <div class="icon-wrapper" data-fallback="n">
           <div class="top-site-icon rich-icon" style="background-image: url(${site.favicon});"></div>
