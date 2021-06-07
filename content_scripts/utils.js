@@ -1,5 +1,5 @@
 function isInUIFrame() {
-    return document.location.href.indexOf(chrome.extension.getURL("")) === 0;
+    return document.location.href.indexOf(chrome.runtime.getURL("")) === 0;
 }
 
 function timeStampString(t) {
