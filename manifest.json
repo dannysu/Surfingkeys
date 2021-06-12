@@ -9,9 +9,6 @@
         "48": "icons/48.png",
         "128": "icons/128.png"
     },
-    "chrome_url_overrides": {
-        "newtab": "pages/newtab_redirect.html"
-    },
     "commands": {
         "restartext": {
             "description": "Restart this extenstion."
