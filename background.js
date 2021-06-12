@@ -566,6 +566,24 @@ const ChromeService = (function() {
         });
     };
 
+    self.getVIMarks = function(message, sender, sendResponse) {
+        loadSettings('marks', function(data) {
+            var marks = data.marks || {};
+            _response(message, sendResponse, {
+                marks: marks
+            });
+        });
+    };
+    self.deleteVIMarks = function(message, sender, sendResponse) {
+        loadSettings('marks', function(data) {
+            var marks = data.marks || {};
+            var targets = message.target.split('');
+            for (var target of targets) {
+                delete marks[target];
+            }
+            _updateAndPostSettings({marks: marks});
+        });
+    };
     self.addVIMark = function(message, sender, sendResponse) {
         loadSettings('marks', function(data) {
             extendObject(data.marks, message.mark);

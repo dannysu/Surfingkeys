@@ -89,6 +89,24 @@ command('quit', '#5quit chrome', function() {
 command('clearHistory', 'clearHistory <find|cmd|...>', function(args) {
     runtime.updateHistory(args[0], []);
 });
+command('marks', 'list all marks', function() {
+    if (Front.omnibar.style.display === "none") {
+        Front.openOmnibar({ type: "Commands" });
+    }
+    RUNTIME('getVIMarks', {}, function(response) {
+        Omnibar.listResults(Object.keys(response.marks), function(m) {
+            var li = createElementWithContent('li', m + ' - ' + response.marks[m].url);
+            li.cmd = '';
+            return li;
+        });
+    });
+    return true; // to keep open after the command executed.
+});
+command('delmarks', 'delmarks [mark(s)]', function(args) {
+    RUNTIME('deleteVIMarks', {
+        target: args[0]
+    });
+});
 command('listSession', 'list session', function() {
     if (Front.omnibar.style.display === "none") {
         Front.openOmnibar({ type: "Commands" });
