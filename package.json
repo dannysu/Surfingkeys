@@ -30,7 +30,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp",
+    "build": "gulp firefox && cp dist/Firefox-extension/sk.zip /media/sf_D_DRIVE",
     "dev": "gulp --env development",
     "docs:watch": "documentation serve pages/*.js --watch"
   },
